@@ -22,13 +22,18 @@ public class Activator implements BundleActivator {
 		Activator.context = bundleContext;
 		ServiceReference[] serviceReferences = bundleContext.getAllServiceReferences(null, null);
 		for (ServiceReference serviceReference : serviceReferences) {
+			System.out.println(serviceReference.toString());
 			if(serviceReference.toString().equals("[ihelloservice.HelloService]")) {
-				System.out.println(serviceReference.toString());
+//				System.out.println(serviceReference.toString());
 				HelloService h = bundleContext.getService(serviceReference);
 				System.out.println(h.getHello());
 				bundleContext.ungetService(serviceReference);
 			}
 		}
+		ServiceReference ref = bundleContext.getServiceReference(HelloService.class.getName());
+		HelloService hello = bundleContext.getService(ref);
+		System.out.println(hello.getHello());
+		bundleContext.ungetService(ref);
 	}
 
 	/*
